@@ -69,6 +69,7 @@
             '<option disabled="disabled">---------</option>' +
             '<option ' + (field_operator == "_present"    ? 'selected="selected"' : '') + ' value="_present">' + RailsAdmin.I18n.t("is_present") + '</option>' +
             '<option ' + (field_operator == "_blank"      ? 'selected="selected"' : '') + ' value="_blank">' + RailsAdmin.I18n.t("is_blank") + '</option>' +
+            '<option ' + (field_operator == "_null"      ? 'selected="selected"' : '') + ' value="_null">Is null</option>' +
           '</select>'
           var additional_control = '<input class="additional-fieldset input-small" style="display:' + (field_operator == "_blank" || field_operator == "_present" ? 'none' : 'inline-block') + ';" type="text" name="' + value_name + '" value="' + field_value + '" /> ';
           break;
