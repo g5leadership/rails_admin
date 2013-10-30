@@ -4,7 +4,7 @@
 [![Dependency Status](https://gemnasium.com/sferik/rails_admin.png?travis)][gemnasium]
 [![Code Climate](https://codeclimate.com/github/sferik/rails_admin.png)][codeclimate]
 [![Coverage Status](https://coveralls.io/repos/sferik/rails_admin/badge.png?branch=master)][coveralls]
-[![Pledgie](http://www.pledgie.com/campaigns/15917.png)][pledgie]
+[![Pledgie](https://pledgie.com/campaigns/15917.png)][pledgie]
 [![Flattr](http://api.flattr.com/button/flattr-badge-large.png)][flattr]
 
 [gem]: https://rubygems.org/gems/rails_admin
@@ -148,7 +148,6 @@ If you think you found a bug in RailsAdmin, you can [submit an issue](https://gi
 ## Supported Ruby Versions
 This library aims to support and is [tested against][travis] the following Ruby implementations:
 
-* Ruby 1.9.2
 * Ruby 1.9.3
 * Ruby 2.0.0
 * [Rubinius][]
