@@ -135,11 +135,11 @@
       - total_count = @objects.total_count.to_i
       = paginate(@objects, :theme => 'twitter-bootstrap', :remote => true)
       = link_to(t("admin.misc.show_all"), index_path(params.merge(:all => true)), :class => "show-all btn clearfix pjax") # unless total_count > 100 || total_count <= @objects.to_a.size
-      - if total_count <= 100 || total_count > @objects.to_a.size
+      - if total_count <= 100 #|| total_count > @objects.to_a.size
         = link_to(t("admin.misc.show_all"), index_path(params.merge(:all => true)), :class => "show-all btn clearfix pjax")
       - else
-        = select_tag :per, options_for_select([,[100, 250, 500, 1000].map { |p| [p.to_s, p.to_s] }.map { |n| [n.first + ' Per Page', n.last] }, params[:per]),
-                                onchange: location.href = '?' + $.param(queryParams({per: this.value}));"
+        = select_tag :per, options_for_select([100, 250, 500, 1000].map { |n| [n.to_s + ' Per Page', n.to_s] }, params[:per]),
+                                onchange: "location.href = '?' + $.param(queryParams({per: this.value}));"
       .clearfix.total-count= "#{total_count} #{@model_config.pluralize(total_count).downcase}"
     - else
       .clearfix.total-count= "#{@objects.size} #{@model_config.pluralize(@objects.size).downcase}"
