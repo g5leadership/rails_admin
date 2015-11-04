@@ -99,6 +99,18 @@
       - if export_action
         %span{:style => 'float:right'}= link_to wording_for(:link, export_action), export_path(params.except('set').except('page')), :class => 'btn btn-info'
 
+  - per_page_select = select_tag :per, options_for_select([20,100,250,500,1000].map { |n| ["Show #{n} #{@model_config.pluralize(3)} Per Page", n.to_s] }, params[:per]),
+                                onchange: "location.href = '?' + $.param(queryParams({per: this.value}));",
+                                class: "form-control clearfix"
+  - if @objects.size > 20 && @objects.respond_to?(:total_count)
+    = page_entries_info(@objects)
+    = per_page_select
+    = paginate(@objects, theme: 'twitter-bootstrap', remote: true)
+  - elsif !@objects.respond_to?(:total_count)
+    .total-count
+      %strong= "Displaying all #{number_with_delimiter(@objects.size)} #{@model_config.pluralize(@objects.size)}"
+    .p= "&nbsp;".html_safe
+
   = form_tag bulk_action_path(:model_name => @abstract_model.to_param), :method => :post, :id => "bulk_form", :class => "form" do
     = hidden_field_tag :bulk_action
     %table.table.table-condensed.table-striped
@@ -133,17 +145,15 @@
               %ul.inline= menu_for :member, @abstract_model, object, true
     - if @objects.respond_to?(:total_count)
       - total_count = @objects.total_count.to_i
-      = paginate(@objects, :theme => 'twitter-bootstrap', :remote => true)
-      = link_to(t("admin.misc.show_all"), index_path(params.merge(:all => true)), :class => "show-all btn clearfix pjax") unless total_count > 100 || total_count <= @objects.to_a.size
-      - if total_count <= 100 #|| total_count > @objects.to_a.size
+      = paginate(@objects, theme: 'twitter-bootstrap', remote: true)
+      .clearfix= page_entries_info(@objects)
+      - if total_count <= 100 # || total_count > @objects.to_a.size
         = link_to(t("admin.misc.show_all"), index_path(params.merge(:all => true)), :class => "show-all btn clearfix pjax")
       - else
-        = select_tag :per, options_for_select([100, 250, 500, 1000].map { |n| [n.to_s + ' Per Page', n.to_s] }, params[:per]),
-                                onchange: "location.href = '?' + $.param(queryParams({per: this.value}));",
-                                class: "form-control clearfix pjax"
-      .clearfix.total-count= "#{total_count} #{@model_config.pluralize(total_count).downcase}"
+        = per_page_select
+-#      .clearfix.total-count= "#{number_with_delimiter(total_count)} Total #{@model_config.pluralize(total_count)}"
     - else
-      .clearfix.total-count= "#{@objects.size} #{@model_config.pluralize(@objects.size).downcase}"
+      .clearfix.total-count= "#{number_with_delimiter(@objects.size)} #{@model_config.pluralize(@objects.size)}"
 
 :javascript
   function parseQuery(qstr) {
